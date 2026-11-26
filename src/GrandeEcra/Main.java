@@ -1,12 +1,13 @@
 package GrandeEcra;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import static GrandeEcra.Menus.*;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
         int opcao;
         do {
