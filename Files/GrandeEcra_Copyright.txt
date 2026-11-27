@@ -3,7 +3,7 @@
 +----------------------------------------------------------------------------+
 |                                                                            |
 |                             DESENVOLVIDO POR:                              |
-|                                Vitor Santos                                |
+|                              Beatriz Tiberio                               |
 |                                                                            |
 |                     Software Developer - CESAE Digital                     |
 |                       Programacao Estruturada - Java                       |

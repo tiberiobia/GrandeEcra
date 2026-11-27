@@ -14,7 +14,7 @@ public class Menus {
 
     /**
      * Apresenta o menu administrativo após validar o login e executa a opção escolhida.
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException caso algum ficheiro não seja encontrado
      */
     public static void menuAdmin() throws FileNotFoundException {
         //Login obrigatorio
@@ -22,6 +22,7 @@ public class Menus {
             System.out.println("\n Login efetuado com sucesso!");
             int opcao;
             do {
+                System.out.println("---------------------------");
                 System.out.println("\n1- Consultar ficheiros");
                 System.out.println("2- Estatisticas gerais de vendas");
                 System.out.println("3- Receita por sala");
@@ -29,6 +30,7 @@ public class Menus {
                 System.out.println("5- Top 3 filmes com maior receita");
                 System.out.println("6- Resetar lotacao de uma sala");
                 System.out.println("0- Voltar");
+                System.out.println("---------------------------");
 
                 System.out.print("Escolha uma opção: ");
                 opcao = lerInteiro();
@@ -60,7 +62,7 @@ public class Menus {
                 }
             } while (opcao != 0);
         } else {
-            System.out.println("Acesso encerrado pelo utilizador.");
+            System.out.println("Credenciais incorretas! A regressar ao menu inicial...");
         }
 
 
@@ -72,7 +74,8 @@ public class Menus {
     public static void menuCliente(){
         int opcao;
         do {
-            System.out.println("\n1- Novo registo");
+            System.out.println("---------------------------");
+            System.out.println("1- Novo registo");
             System.out.println("2- Consultar cartaz cinematografico");
             System.out.println("3- Pesquisar filmes");
             System.out.println("4- Visualizar mapa de uma sala");
@@ -80,10 +83,11 @@ public class Menus {
             System.out.println("6- Recomendar filmes");
             System.out.println("7- Quiz cinematografico");
             System.out.println("0- Voltar");
+            System.out.println("---------------------------");
 
             System.out.print("Escolha uma opção: ");
             opcao = lerInteiro();
-
+            System.out.println("\n---------------------------");
             switch (opcao) {
                 case 1:
                     registroCliente();
@@ -136,10 +140,10 @@ public class Menus {
         //os nove ficheiros
 //       O ficheiro de autenticação é exclusivamente de consulta
 //        ADMIN,
-        Scanner input = new Scanner(System.in);
         int opcao;
         do {
-            System.out.println("\nqual ficheiro queres ver:");
+            System.out.println("---------------------------");
+            System.out.println("qual ficheiro queres ver:");
             System.out.println("1-AdminLogin.csv");
             System.out.println("2-Bilhetes.csv");
             System.out.println("3-Filmes.csv ");
@@ -150,46 +154,52 @@ public class Menus {
             System.out.println("8-Cartaz.txt");
             System.out.println("9-Copyright.txt");
             System.out.println("0-voltar para o menu anterior");
+            System.out.println("---------------------------");
+            System.out.println();
             System.out.print("Escolha uma opção:");
             opcao=lerInteiro();
-            switch (opcao){
+
+
+            String caminho = null;
+            switch (opcao) {
                 case 1:
-                    //tem que validar o login
-                   if (efetuarLogin()){
-                       System.out.println(lerTodasLinhas("Files/GrandeEcra_AdminLogin.csv"));
-                   }else{
-                       System.out.println("Login necessario nao efetuado pelo utilizador");
-                   }
+                    caminho = "Files/GrandeEcra_AdminLogin.csv";
                     break;
                 case 2:
-                    System.out.println(lerTodasLinhas("Files/GrandeEcra_Bilhetes.csv"));
+                    caminho = "Files/GrandeEcra_Bilhetes.csv";
                     break;
                 case 3:
-                    System.out.println(lerTodasLinhas("Files/GrandeEcra_Filmes.csv"));
+                    caminho = "Files/GrandeEcra_Filmes.csv";
                     break;
                 case 4:
-                    System.out.println(lerTodasLinhas("Files/GrandeEcra_Quiz.csv"));
+                    caminho = "Files/GrandeEcra_Quiz.csv";
                     break;
                 case 5:
-                    System.out.println(lerTodasLinhas("Files/Sala_Mar.csv"));
+                    caminho = "Files/Sala_Mar.csv";
                     break;
                 case 6:
-                    System.out.println(lerTodasLinhas("Files/Sala_Terra.csv"));
+                    caminho = "Files/Sala_Terra.csv";
                     break;
                 case 7:
-                    System.out.println(lerTodasLinhas("Files/Sala_Sol.csv"));
+                    caminho = "Files/Sala_Sol.csv";
                     break;
                 case 8:
-                    System.out.println(lerTodasLinhas("Files/GrandeEcra_Cartaz.txt"));
+                    caminho = "Files/GrandeEcra_Cartaz.txt";
                     break;
                 case 9:
-                    System.out.println(lerTodasLinhas("Files/GrandeEcra_Copyright.txt"));
+                    caminho = "Files/GrandeEcra_Copyright.txt";
                     break;
                 case 0:
-                    System.out.println("\nA voltar para o menu inicial!");
+                    System.out.println("\nA voltar para o menu anterior!");
                     break;
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
+            }
+            if (caminho != null) {
+                System.out.println();
+                for (String linha : lerFicheiroBruto(caminho)) {
+                    System.out.println(linha);
+                }
             }
 
         }while (opcao!=0);

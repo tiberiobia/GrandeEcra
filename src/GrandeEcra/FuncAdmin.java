@@ -10,27 +10,30 @@ import static GrandeEcra.MetodosBasicos.*;
 
 public class FuncAdmin {
     //login
+    /**
+     * Solicita username e password ao utilizador e valida no ficheiro de autenticação.
+     *
+     * @return true se as credenciais forem válidas, false caso contrário
+     */
     public static boolean efetuarLogin() {
         while (true) {
             Scanner input = new Scanner(System.in);
             System.out.println("\n--- LOGIN ---");
-            System.out.print("Username (ou '0' para sair): ");
+            System.out.print("Username : ");
             String username = input.nextLine().trim();
-
-            if (username.equals("0")) {
-                return false;
-            }
 
             System.out.print("Password: ");
             String password = input.nextLine().trim();
-
-            if (validarCredenciais(username, password)) {
-                return true;
-            } else {
-                System.out.println("Credenciais incorretas! Tente novamente.");
-            }
+            return validarCredenciais(username,password);
         }
     }
+    /**
+     * Verifica se o par username e password existe no ficheiro GrandeEcra_AdminLogin.csv.
+     *
+     * @param username nome de utilizador
+     * @param password palavra-passe
+     * @return true se corresponder a uma linha válida, false caso contrário
+     */
     public static boolean validarCredenciais(String username, String password) {
         File file = new File("Files/GrandeEcra_AdminLogin.csv");
 
@@ -55,6 +58,9 @@ public class FuncAdmin {
 
     //------------------------------------+
     //estatisticas
+    /**
+     * Calcula e apresenta o número total de bilhetes vendidos, a receita total e o valor médio por bilhete.
+     */
     public static void estatisticasVendas(){
 
         String[][] dados= criarMatriz("Files/GrandeEcra_Bilhetes.csv",";");
@@ -63,8 +69,9 @@ public class FuncAdmin {
         int totalBilhetes= dados.length;
 
         //receita total
-        //somar a ultima coluna
         double receitaTotal=0;
+        //somar a ultima coluna
+
         for (int i = 0; i < dados.length; i++) {
             int colunaVendas=dados[i].length-1;//indice da ultima coluna
             double valorBilhete=Double.parseDouble(dados[i][colunaVendas].trim());
@@ -84,7 +91,9 @@ public class FuncAdmin {
     }
     //-----------------------------------------------
     //receitas
-
+    /**
+     * Apresenta o número de bilhetes vendidos e a receita total para cada uma das três salas.
+     */
     public static void receitaSala(){
         String[][] dados= criarMatriz("Files/GrandeEcra_Bilhetes.csv",";");
         int bilhetesMar = 0, bilhetesSol = 0, bilhetesTerra = 0;
@@ -115,8 +124,12 @@ public class FuncAdmin {
         System.out.printf("Sala Terra | %d bilhetes | %.2f EUR\n", bilhetesTerra, receitaTerra);
     }
 
+    /**
+     * Calcula a receita total por filme e apresenta o Top 3 filmes com maior faturação.
+     */
     public static void receitaFilme(){
         String[][] dados= criarMatriz("Files/GrandeEcra_Bilhetes.csv",";");
+
         ArrayList<String> filmes=new ArrayList<>();
         ArrayList<Integer> bilhetesPorFilme=new ArrayList<>();
         ArrayList<Double>receitaPorFilme=new ArrayList<>();
@@ -173,7 +186,9 @@ public class FuncAdmin {
         }
 
     }
-
+    /**
+     * Solicita o título de um filme e apresenta a quantidade de bilhetes vendidos e a receita total.
+     */
 
     public static void consultarFilme() throws  FileNotFoundException{
         String[][] dados= criarMatriz("Files/GrandeEcra_Bilhetes.csv",";");
@@ -184,16 +199,17 @@ public class FuncAdmin {
 
         int totalBilhetes=0;
         double receitaTotal=0;
+        String tituloEncontrado = filmeProcurado;
         int colunaFilme=5;
         for (int i = 0; i < dados.length; i++) {
             String novoFilme=dados[i][colunaFilme];
 
             //comparar o filme com a busca
-            if (novoFilme.equals(filmeProcurado)){
+            if (novoFilme.equalsIgnoreCase(filmeProcurado)){
                 int colunaVendas= dados[i].length-1;
                 Double valorBilhete=Double.parseDouble(dados[i][colunaVendas]);
                 totalBilhetes++;
-                receitaTotal=+valorBilhete;
+                receitaTotal+=valorBilhete;
             }
 
         }
@@ -204,12 +220,16 @@ public class FuncAdmin {
             System.out.printf("%s: %d bilhetes, Total: %.2f EUR \n",
                     filmeProcurado,totalBilhetes,receitaTotal);
 
+        }else {
+            System.out.println("Não existem vendas registadas para o filme \"" + filmeProcurado + "\".");
         }
 
     }
     //------------------------------------------------------------------
     //resetar sala
-
+    /**
+     * Repõe todos os lugares de uma sala selecionada para 0 (disponível) após confirmação.
+     */
     public static void resetarSala(){
         Scanner input = new Scanner(System.in);
         Map<String, String[][]> sala = escolherFicheiro();
@@ -231,27 +251,25 @@ public class FuncAdmin {
 
 
         int totalOcupado=0;
+        int lotacaoTotal = 0;
 
         for (int i = 0; i < matrizSala.length; i++) {
             for (int j = 0; j < matrizSala[i].length; j++) {
-
+                lotacaoTotal++;
                 //valor 1 é ocupado
                 int posicao=Integer.parseInt(matrizSala[i][j].trim());
                 if (posicao==1){
                     totalOcupado++;
                     matrizSala[i][j]="0";
-
                 }
-
-
             }
-
         }
         String caminhoFicheiro="Files/Sala_"+nomeSala+".csv";
         //guardar matriz
         reescreverFicheiroMatriz(caminhoFicheiro,matrizSala);
         System.out.println(totalOcupado+ "lugares libertados.");
-
+        System.out.println("Sala " + nomeSala + ": " + lotacaoTotal
+                + " lugares disponiveis de " + lotacaoTotal + ".");
 
     }
 

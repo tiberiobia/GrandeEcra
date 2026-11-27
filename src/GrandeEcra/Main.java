@@ -1,9 +1,11 @@
 package GrandeEcra;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 import static GrandeEcra.Menus.*;
+import static GrandeEcra.MetodosBasicos.*;
 
 
 public class Main {
@@ -11,12 +13,15 @@ public class Main {
         Scanner input = new Scanner(System.in);
         int opcao;
         do {
+            System.out.println("---------------------------\n");
             System.out.println("=========== GRANDEECRA ===========\n");
             System.out.println("Grandes histórias merecem um grande ecrã.");
-            System.out.println(" ");
+            System.out.println();
+            System.out.println("---------------------------");
             System.out.println("1- Admin");
             System.out.println("2- Cliente");
             System.out.println("0- Sair");
+            System.out.println("---------------------------");
             System.out.print("Escolha uma opção:");
             opcao= input.nextInt();
             switch (opcao){
@@ -27,8 +32,13 @@ public class Main {
                     menuCliente();
                     break;
                 case 0:
-                    System.out.println("\nA encerrar o sistema. Até breve!");
+                    System.out.println();
+                    List<String> copyright = lerFicheiroBruto("Files/GrandeEcra_Copyright.txt");
+                    for (String linha : copyright) {
+                        System.out.println(linha);
+                    }
                     break;
+                    
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }

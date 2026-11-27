@@ -77,7 +77,28 @@ public class MetodosBasicos {
         }
         return linhas;
     }
-
+    /**
+     * Lê todas as linhas de um ficheiro preservando espaços e linhas em branco.
+     *
+     * @param caminhoFicheiro o caminho para o ficheiro a ler
+     * @return uma List com todas as linhas exatas do ficheiro
+     */
+    public static List<String> lerFicheiroBruto(String caminhoFicheiro) {
+        List<String> linhas = new ArrayList<>();
+        File file = new File(caminhoFicheiro);
+        if (!file.exists()) {
+            System.out.println("Ficheiro não encontrado: " + caminhoFicheiro);
+            return linhas;
+        }
+        try (Scanner sc = new Scanner(file)) {
+            while (sc.hasNextLine()) {
+                linhas.add(sc.nextLine());
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro ao ler ficheiro " + caminhoFicheiro);
+        }
+        return linhas;
+    }
 
     /**
      * Reescreve um ficheiro substituindo o seu conteúdo pelos dados de uma matriz.
@@ -236,7 +257,7 @@ public class MetodosBasicos {
     public static Map<String, String[][]> escolherFicheiro() {
         Scanner input = new Scanner(System.in);
         Map<String, String[][]> sala = new HashMap<>();
-
+        System.out.println("---------------------------");
         System.out.println("Escolha uma sala:");
         System.out.println("1-Mar");
         System.out.println("2-Terra");

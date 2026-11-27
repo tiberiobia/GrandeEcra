@@ -43,7 +43,7 @@ public class FuncCliente {
      * Lê o ficheiro de cartaz do cinema e exibe o seu conteúdo linha a linha na consola.
      */
     public static void lerCartaz() {
-        List<String> linhas = lerTodasLinhas("Files/GrandeEcra_Cartaz.txt");
+        List<String> linhas = lerFicheiroBruto("Files/GrandeEcra_Cartaz.txt");
         for (String linha : linhas) {
             System.out.println(linha);
 
@@ -58,9 +58,9 @@ public class FuncCliente {
     public static void pesqFilme() {
         String[][] matriz = criarMatriz("Files/GrandeEcra_Filmes.csv", ";");
         Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o género que quer pesquisar:");
+        System.out.print("Digite o género que quer pesquisar: ");
         String genero = sc.nextLine().trim().toLowerCase();
-
+        System.out.println("---------------------------");
         boolean encontrado = false;
 
         for (int i = 0; i < matriz.length; i++) {
@@ -90,11 +90,14 @@ public class FuncCliente {
 
 
         //exibir sala
-        System.out.println("      Sala " + nomeSala);
-        System.out.println("      Ecrã");
+        System.out.println("---------------------");
+        System.out.println("     Sala " + nomeSala.toUpperCase());
+        System.out.println();
+        System.out.println("        Ecrã");
         System.out.println("----------------------");
         //numero das colunas
-        System.out.println("  ");
+        System.out.println();
+        System.out.print("   ");
         for (int k = 0; k < matriz[0].length; k++) {
             System.out.print((k + 1) + " ");
 
@@ -106,7 +109,7 @@ public class FuncCliente {
         char letraFila = 'A';
         for (int i = 0; i < matriz.length; i++) {
             //exibir a fila
-            System.out.print(letraFila + " ");
+            System.out.print(letraFila + "  ");
             letraFila++;
             for (int j = 0; j < matriz[i].length; j++) {
                 String situacao = matriz[i][j];
@@ -114,7 +117,7 @@ public class FuncCliente {
                     System.out.print("O ");
                     disponiveis++;
                 } else if (situacao.equals("1")) {
-                    System.out.print("x ");
+                    System.out.print("X ");
                     ocupados++;
                 }
 
@@ -128,8 +131,8 @@ public class FuncCliente {
             taxaOcupacao = (ocupados * 100.0) / totalLugares;
         }
         System.out.println("O - Disponivel | X - Ocupado");
-        System.out.printf("Lotação: %d | Disponiveis: %d | Ocupados: %d", totalLugares, disponiveis, ocupados);
-        System.out.println("Taxa de ocupacao: " + taxaOcupacao + "%");
+        System.out.printf("Lotação: %d | Disponiveis: %d | Ocupados: %d\n", totalLugares, disponiveis, ocupados);
+        System.out.printf("Taxa de ocupacao: %.2f", taxaOcupacao);
 
 
     }
@@ -140,6 +143,7 @@ public class FuncCliente {
      */
     public static void reservarBilhete() {
         Scanner input = new Scanner(System.in);
+
         Map<String, String[][]> sala = escolherFicheiro();
 
         // Sala vazia ou opção cancelada
@@ -150,7 +154,7 @@ public class FuncCliente {
         String nomeSala = sala.keySet().iterator().next();
         String[][] matriz = sala.get(nomeSala);
         mapaSala(nomeSala, matriz);
-
+        System.out.println("\n---------------------------");
         // Conta lugares disponíveis
         int disponiveis = 0;
         for (int i = 0; i < matriz.length; i++) {
@@ -173,13 +177,7 @@ public class FuncCliente {
         int quantidade = 0;
         do {
             System.out.print("> Quantidade de bilhetes: ");
-            if (input.hasNextInt()) {
-                quantidade = input.nextInt();
-                input.nextLine();
-            } else {
-                input.nextLine();
-                quantidade = 0;
-            }
+            quantidade = lerInteiro();
 
             if (quantidade <= 0 || quantidade > disponiveis) {
                 System.out.println("Quantidade inválida. Introduza um valor entre 1 e " + disponiveis + ".");
@@ -399,6 +397,8 @@ public class FuncCliente {
         System.out.println("3 - Saga Completa (20 questões)");
 
         int numQuestoes = 0;
+        String nomeModalidade = "";
+
         while (numQuestoes == 0) {
             System.out.print("Escolha uma modalidade (1-3): ");
             int modalidade = lerInteiro();
@@ -418,6 +418,8 @@ public class FuncCliente {
         if (numQuestoes > perguntas.length) {
             numQuestoes = perguntas.length;
         }
+
+        System.out.println("\nQUIZ CINEMATOGRAFICO - " + nomeModalidade);
 
         //randon
         java.util.Random aleatorio = new java.util.Random();
@@ -469,7 +471,7 @@ public class FuncCliente {
                 System.out.println("Resposta correta!");
                 corretas++;
             } else {
-                String textoCorreto = perguntas[indicePergunta][respostaCerta + 1];
+                String textoCorreto = perguntas[indicePergunta][respostaCerta];
                 System.out.println("Resposta incorreta! A resposta correta era: " + respostaCerta + " - " + textoCorreto);
                 incorretas++;
             }
@@ -477,7 +479,7 @@ public class FuncCliente {
 
         // porcentagem e classificação final
         double percentagem = (corretas * 100.0) / numQuestoes;
-        String classificacao = "";
+        String classificacao;
 
         if (percentagem < 25) {
             classificacao = "Só veio pelas pipocas";
@@ -496,6 +498,7 @@ public class FuncCliente {
         System.out.println("Respostas incorretas: " + incorretas);
         System.out.printf("Percentagem de sucesso: %.1f%%\n", percentagem);
         System.out.println("Classificação: " + classificacao);
+        System.out.println("----------------------------------");
     }
 
 
