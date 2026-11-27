@@ -30,7 +30,11 @@ public class MetodosBasicos {
             }
         }
     }
-
+    //---------------------------------------------------------------------------------
+    //ler char
+    public static boolean filaValida(char c) {
+        return c >= 'A' && c <= 'Z';
+    }
     //-------------------------------------------------------------------------------
     //numero aleatorio
 
@@ -55,7 +59,7 @@ public class MetodosBasicos {
 
     public static void reescreverFicheiroMatriz(String caminhoFicheiro, String[][] matriz) {
         try {
-            PrintWriter writer = new PrintWriter(new FileWriter(caminhoFicheiro, false));
+            PrintWriter writer = new PrintWriter(new FileWriter(caminhoFicheiro, false));//false limpa o ficheiro e começa do zero
             for (int i = 0; i < matriz.length; i++) {
                 String linha = "";
                 for (int j = 0; j < matriz[i].length; j++) {
@@ -68,6 +72,7 @@ public class MetodosBasicos {
                 }
                 writer.println(linha);
             }
+            writer.close();
 
         } catch (IOException e) {
             System.out.println("Erro ao reescrever ficheiro " + caminhoFicheiro);
@@ -76,6 +81,7 @@ public class MetodosBasicos {
 
     //---------------------------------------------------------------------------------
     //matriz
+    //matriz que tem cabeçalho
     public static String[][] criarMatriz(String caminhoFicheiro, String separador) {
         File ficheiro = new File(caminhoFicheiro);
         int totalLinhas = 0;
@@ -128,6 +134,53 @@ public class MetodosBasicos {
 
     }
 
+    //matriz sem cabeçalho
+    public static String[][] criarMatrizSemCabecalho(String caminhoFicheiro, String separador) {
+        File ficheiro = new File(caminhoFicheiro);
+        int totalLinhas = 0;
+        int totalColunas = 0;
+        try {
+            // Contar TODAS as linhas
+            Scanner leitor = new Scanner(ficheiro);
+            while (leitor.hasNextLine()) {
+                String linha = leitor.nextLine().trim();
+                if (!linha.isEmpty()) {
+                    if (totalLinhas == 0) {
+                        totalColunas = linha.split(separador).length;
+                    }
+                    totalLinhas++;
+                }
+            }
+            leitor.close();
+
+            // Criar a matriz
+            if (totalLinhas >= 1 && totalColunas >= 1) {
+                Scanner sc = new Scanner(ficheiro);
+                String[][] matriz = new String[totalLinhas][totalColunas];
+
+                // Preencher a matriz desde a 1 linha (sem saltar nada)
+                int linhaMatriz = 0;
+                while (sc.hasNextLine()) {
+                    String linha = sc.nextLine().trim();
+                    if (!linha.isEmpty()) {
+                        String[] info = linha.split(separador);
+                        for (int i = 0; i < totalColunas; i++) {
+                            matriz[linhaMatriz][i] = info[i].trim().toLowerCase();
+                        }
+                        linhaMatriz++;
+                    }
+                }
+                sc.close();
+                return matriz;
+            } else {
+                return new String[0][0];
+            }
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Ficheiro não encontrado: " + caminhoFicheiro, e);
+        }
+    }
+
     //--------------------------------------------------
     //escolher o ficheiro
     public static Map<String, String[][]> escolherFicheiro() {
@@ -140,7 +193,7 @@ public class MetodosBasicos {
         System.out.println("3-Sol");
         System.out.print("Digite a opcao: ");
         int opcao = lerInteiro();
-        input.nextLine();
+
 
         String caminhoFicheiro = "";
         String nomeSala = "";
@@ -156,10 +209,10 @@ public class MetodosBasicos {
             nomeSala = "Sol";
         } else {
             System.out.println("Sala Invalida!");
-            return sala; // Devolve o mapa vazio s
+            return sala; // Devolve o mapa vazio
         }
 
-        String[][] matriz = criarMatriz(caminhoFicheiro, ";");
+        String[][] matriz = criarMatrizSemCabecalho(caminhoFicheiro, ";");
         sala.put(nomeSala, matriz);
 
         return sala;

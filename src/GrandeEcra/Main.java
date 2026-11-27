@@ -14,10 +14,10 @@ public class Main {
             System.out.println("=========== GRANDEECRA ===========\n");
             System.out.println("Grandes histórias merecem um grande ecrã.");
             System.out.println(" ");
-            System.out.println("1 - Admin");
-            System.out.println("2 - Cliente");
-            System.out.println("0 - Sair");
-            System.out.println("Escolha uma opção:");
+            System.out.println("1- Admin");
+            System.out.println("2- Cliente");
+            System.out.println("0- Sair");
+            System.out.print("Escolha uma opção:");
             opcao= input.nextInt();
             switch (opcao){
                 case 1:

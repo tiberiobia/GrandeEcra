@@ -3,13 +3,12 @@ package GrandeEcra;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 import static GrandeEcra.MetodosBasicos.*;
 
-public class Funcoes {
+public class FuncAdmin {
     //login
     public static boolean efetuarLogin() {
         while (true) {
@@ -77,10 +76,10 @@ public class Funcoes {
 
         System.out.println("\n-----------------------------------");
         System.out.println("Estatiscas de vendas de bilhetes");
-        System.out.println("-----------------------------------/n");
+        System.out.println("-----------------------------------\n");
         System.out.println("Total de bilhetes vendidos: "+totalBilhetes);
         System.out.println("Receita Total: "+receitaTotal);
-        System.out.println("Valor medio por bilhete:"+valorMedio);
+        System.out.printf("Valor medio por bilhete: %.2f",valorMedio);
 
     }
     //-----------------------------------------------
@@ -223,9 +222,9 @@ public class Funcoes {
 
 
         System.out.println("sala a resetar: "+nomeSala);
-        System.out.print("Confirma a reposicao? (S/N)");
+        System.out.print("Confirma a reposicao? (S/N):");
         String confirmacao=input.nextLine().trim().toUpperCase();
-        if(!confirmacao.equals("s")){
+        if(!confirmacao.equals("S")){
             System.out.println("Operação cancelada. O ficheiro não foi alterado");
             return;
         }
@@ -248,7 +247,7 @@ public class Funcoes {
             }
 
         }
-        String caminhoFicheiro="Files/Sala_"+nomeSala;
+        String caminhoFicheiro="Files/Sala_"+nomeSala+".csv";
         //guardar matriz
         reescreverFicheiroMatriz(caminhoFicheiro,matrizSala);
         System.out.println(totalOcupado+ "lugares libertados.");
