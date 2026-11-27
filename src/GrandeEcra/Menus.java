@@ -11,6 +11,11 @@ import static GrandeEcra.MetodosBasicos.*;
 
 public class Menus {
     //menus principais
+
+    /**
+     * Apresenta o menu administrativo após validar o login e executa a opção escolhida.
+     * @throws FileNotFoundException
+     */
     public static void menuAdmin() throws FileNotFoundException {
         //Login obrigatorio
         if (efetuarLogin()) {
@@ -60,6 +65,10 @@ public class Menus {
 
 
     }
+
+    /**
+     *  Apresenta o menu principal do cliente e executa a opção escolhida
+     */
     public static void menuCliente(){
         int opcao;
         do {
@@ -118,13 +127,14 @@ public class Menus {
 }
 
     //---------------------------------------------------------------------------
-    //sub menus
+    //sub menu
 
-
+    /**
+     * Apresenta o menu de consulta dos nove ficheiros do sistema (CSV e TXT) e exibe o conteúdo do ficheiro escolhido.
+     */
     public static void menuFicheiros(){
         //os nove ficheiros
-//        permitir selecionar um deles. Imprimir o conteúdo integral
-//        do ficheiro escolhido, incluindo o cabeçalho quando existir. O ficheiro de autenticação é exclusivamente de consulta
+//       O ficheiro de autenticação é exclusivamente de consulta
 //        ADMIN,
         Scanner input = new Scanner(System.in);
         int opcao;

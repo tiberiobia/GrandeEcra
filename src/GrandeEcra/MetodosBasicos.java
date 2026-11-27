@@ -7,6 +7,11 @@ public class MetodosBasicos {
 
     //---------------------------------------------
     //Ler numeros
+    /**
+     * Lê um número inteiro introduzido pelo utilizador na consola.
+     * Repete o pedido até que seja inserido um valor inteiro válido.
+     * @return o número inteiro válido introduzido pelo utilizador
+     */
     public static int lerInteiro() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -18,7 +23,11 @@ public class MetodosBasicos {
             }
         }
     }
-
+    /**
+     * Lê um número decimal introduzido pelo utilizador na consola
+     *aceitando vírgula ou ponto como separador.
+     * @return o número decimal válido introduzido pelo utilizador
+     */
     public static double lerDouble() {
         Scanner sc = new Scanner(System.in);
         while (true) {
@@ -30,16 +39,28 @@ public class MetodosBasicos {
             }
         }
     }
+
     //---------------------------------------------------------------------------------
     //ler char
+    /**
+     * Verifica se o caráter fornecido corresponde a uma letra maiúscula válida para identificar uma fila (entre 'A' e 'Z').
+     *
+     * @param c o caráter da fila a validar
+     * @return true se o caráter estiver entre 'A' e 'Z', false caso contrário
+     */
     public static boolean filaValida(char c) {
         return c >= 'A' && c <= 'Z';
     }
-    //-------------------------------------------------------------------------------
-    //numero aleatorio
 
     //--------------------------------------------------------------------------
     //ficheiros
+    /**
+     * Lê todas as linhas de um ficheiro e devolve-as numa lista.
+     * Caso o ficheiro não exista ou ocorra um erro de leitura, devolve uma lista vazia.
+     *
+     * @param caminhoFicheiro o caminho para o ficheiro a ler
+     * @return uma List com as linhas lidas do ficheiro
+     */
     public static List<String> lerTodasLinhas(String caminhoFicheiro) {
         List<String> linhas = new ArrayList<>();
         File file = new File(caminhoFicheiro);
@@ -57,6 +78,13 @@ public class MetodosBasicos {
         return linhas;
     }
 
+
+    /**
+     * Reescreve um ficheiro substituindo o seu conteúdo pelos dados de uma matriz.
+     *
+     * @param caminhoFicheiro o caminho para o ficheiro a reescrever
+     * @param matriz a matriz de texto com os dados a gravar no ficheiro
+     */
     public static void reescreverFicheiroMatriz(String caminhoFicheiro, String[][] matriz) {
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(caminhoFicheiro, false));//false limpa o ficheiro e começa do zero
@@ -82,6 +110,14 @@ public class MetodosBasicos {
     //---------------------------------------------------------------------------------
     //matriz
     //matriz que tem cabeçalho
+
+    /**
+     * Lê um ficheiro de texto com cabeçalho e carrega os seus dados para uma matriz, ignorando o cabeçalho.
+     *
+     * @param caminhoFicheiro o caminho para o ficheiro a ler
+     * @param separador o caráter ou expressão usada para separar as colunas em cada linha)
+     * @return uma matriz com os dados do ficheiro (sem a linha de cabeçalho)
+     */
     public static String[][] criarMatriz(String caminhoFicheiro, String separador) {
         File ficheiro = new File(caminhoFicheiro);
         int totalLinhas = 0;
@@ -135,6 +171,14 @@ public class MetodosBasicos {
     }
 
     //matriz sem cabeçalho
+
+    /**
+     * Lê um ficheiro de texto sem cabeçalho e carrega todas as suas linhas para uma matriz.
+     *
+     * @param caminhoFicheiro o caminho para o ficheiro a ler
+     * @param separador o caráter ou expressão usada para separar as colunas em cada linha})
+     * @return uma matriz com todos os dados do ficheiro em minúsculas
+     */
     public static String[][] criarMatrizSemCabecalho(String caminhoFicheiro, String separador) {
         File ficheiro = new File(caminhoFicheiro);
         int totalLinhas = 0;
@@ -183,6 +227,12 @@ public class MetodosBasicos {
 
     //--------------------------------------------------
     //escolher o ficheiro
+
+    /**
+     * Solicita ao utilizador a escolha de uma sala de cinema (Mar, Terra ou Sol) e carrega os dados do respetivo ficheiro CSV.
+     *
+     * @return um Map<String, String[][]> em que a chave é o nome da sala escolhida e o valor é a matriz com o estado dos lugares
+     */
     public static Map<String, String[][]> escolherFicheiro() {
         Scanner input = new Scanner(System.in);
         Map<String, String[][]> sala = new HashMap<>();

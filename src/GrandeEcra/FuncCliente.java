@@ -6,7 +6,15 @@ import java.util.Scanner;
 
 import static GrandeEcra.MetodosBasicos.*;
 
+/**
+ * Classe que reúne as funcionalidades disponíveis para o cliente.
+ */
 public class FuncCliente {
+
+    /**
+     * Solicita ao utilizador os dados de registo de um novo cliente (nome, contacto telefónico e email)
+     * e apresenta um resumo dos dados introduzidos.
+     */
     public static void registroCliente() {
         Scanner scanner = new Scanner(System.in);
 
@@ -31,6 +39,9 @@ public class FuncCliente {
         System.out.println("voltando para o menu principal.....");
     }
 
+    /**
+     * Lê o ficheiro de cartaz do cinema e exibe o seu conteúdo linha a linha na consola.
+     */
     public static void lerCartaz() {
         List<String> linhas = lerTodasLinhas("Files/GrandeEcra_Cartaz.txt");
         for (String linha : linhas) {
@@ -40,6 +51,10 @@ public class FuncCliente {
 
     }
 
+    /**
+     * Pesquisa filmes por género e exibe os resultados encontrados.
+     * Apresenta o título, realizador, ano, duração, idade mínima e classificação de cada filme correspondente.
+     */
     public static void pesqFilme() {
         String[][] matriz = criarMatriz("Files/GrandeEcra_Filmes.csv", ";");
         Scanner sc = new Scanner(System.in);
@@ -65,6 +80,12 @@ public class FuncCliente {
         }
     }
 
+    /**
+     * Exibe o mapa visual dos lugares de uma sala de cinema.
+     *
+     * @param nomeSala o nome da sala.
+     * @param matriz a matriz bidimensional que contém a disposição e o estado dos lugares da sala
+     */
     public static void mapaSala(String nomeSala, String[][] matriz) {
 
 
@@ -113,6 +134,10 @@ public class FuncCliente {
 
     }
 
+    /**
+     * Gere o processo de reserva de bilhetes numa sala de cinema escolhida pelo utilizador.
+     * Exibe o mapa da sala, verifica se existem lugares livres  e solicita a quantidade de bilhetes para concluir a reserva.
+     */
     public static void reservarBilhete() {
         Scanner input = new Scanner(System.in);
         Map<String, String[][]> sala = escolherFicheiro();
@@ -218,6 +243,10 @@ public class FuncCliente {
         System.out.println(" | Total: " + quantidade);
     }
 
+    /**
+     * Solicita ao utilizador as suas preferências e recomenda filmes que cumpram os critérios indicados.
+     *
+     */
     public static void recomendarFilmes() {
         String[][] filmes = criarMatriz("Files/GrandeEcra_Filmes.csv", ";");
         Scanner sc = new Scanner(System.in);
@@ -291,7 +320,7 @@ public class FuncCliente {
             pontuacoes.add(pontos);
         }
 
-        // não existam filmes e
+        // não existam filmes
         if (titulos.isEmpty()) {
             System.out.println("\nNão existem filmes elegíveis para a sua idade no catálogo.");
             return;
@@ -351,7 +380,10 @@ public class FuncCliente {
         }
     }
 
-
+    /**
+     * Inicia o quiz cinematográfico a partir das perguntas carregadas.
+     * Permite ao utilizador escolher uma modalidade, apresenta as perguntas de forma aleatória e calcula a pontuação final.
+     */
     public static void quizCinematografico() {
         String[][] perguntas = criarMatriz("Files/GrandeEcra_Quiz.csv", ";");
 
